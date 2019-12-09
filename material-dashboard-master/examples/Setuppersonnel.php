@@ -62,7 +62,7 @@
             </a>
           </li>
           <li class="nav-item active">
-            <a class="nav-link" href="./Setuppersonnel.php">
+            <a class="nav-link" href="./Setuppersonnel.phpd">
               <i class="material-icons">create</i>
               <p>Set-up Personnel</p>
             </a>

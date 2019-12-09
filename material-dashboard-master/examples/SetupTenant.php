@@ -210,12 +210,12 @@
               <div class="col-md-12">
             <div class="card ">
               <div class="card-header">
-                <h4 class="card-title">Accounts</h4>
+                <h4 class="card-title">Tenants</h4>
               </div>
               <div class="card-body">
                 <div class="table-responsive">
 
-                  <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#myModal">Add Account</button>
+                  <button type="button" class="btn" data-toggle="modal" data-target="#myModal">Add Tenants</button>
 
 
                   <?php
@@ -230,6 +230,8 @@
                                     echo "<th>First Name</th>";
                                     echo "<th>Last Name</th>";
                                     echo "<th>Room Number</th>";
+                                    echo "<th>Update</th>";
+                                    echo "<th>Delete</th>";
                                 echo "</tr>";
                             while($row = mysqli_fetch_array($result)){
                                 echo "<tr>";
@@ -238,11 +240,12 @@
                                     echo "<td>" . $row['lastName'] . "</td>";
                                     echo "<td>" . $row['roomNumber'] . "</td>";
                                    
-                                        // echo "<td><select style='color: black;'>
-                                        //               <option><a href='php/edit_acc.php?userID=". $row['userID'] ."' title='Update Record' data-toggle='tooltip'><span class='btn btn-info'>Update</span></a></option>
-                                        //               <option value='Admin'>Admin</option>
-                                        //             </select>";
-                                        // echo "</td>";
+                                          echo "<td>";
+                                            echo "<a href='php/edit_acc.php?tenantID=". $row['tenantID'] ."' title='Update Record' data-toggle='tooltip'><span class='btn btn-info'>Update</span></a>";
+                                            echo"</td>";
+                                            echo "<td>";
+                                            echo "<a href='php/delete_tenant.php?tenantID=". $row['tenantID'] ."' title='Delete Record' data-toggle='tooltip'><span class='btn btn-danger'>Delete</span></a>";
+                                    echo "</td>";
                                 echo "</tr>";
                             }
                             echo "</table>";
@@ -377,7 +380,7 @@
     
                         <div class="modal-footer">
                               <input type="submit" class="btn btn-primary" value="Submit">
-                        <a href="accounts.php" class="btn btn-default">Cancel</a>
+                        <a href="SetupTenant.php" class="btn btn-default">Cancel</a>
                         </div>
                     </form>
                           </div>
