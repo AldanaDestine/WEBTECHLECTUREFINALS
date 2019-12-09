@@ -50,25 +50,25 @@
       <div class="sidebar-wrapper">
         <ul class="nav">
           <li class="nav-item">
-            <a class="nav-link" href="./dashboard.html">
+            <a class="nav-link" href="./dashboard.php">
               <i class="material-icons">dashboard</i>
               <p>Dashboard</p>
             </a>
           </li>
           <li class="nav-item active ">
-            <a class="nav-link" href="./SetupTenant.html">
+            <a class="nav-link" href="./SetupTenant.php">
               <i class="material-icons">perm_identity</i>
               <p>Set-up Tenant</p>
             </a>
           </li>
           <li class="nav-item ">
-            <a class="nav-link" href="./Setuppersonnel.html">
+            <a class="nav-link" href="./Setuppersonnel.php">
               <i class="material-icons">create</i>
               <p>Set-up Personnel</p>
             </a>
           </li>
           <li class="nav-item ">
-            <a class="nav-link" href="./viewinfo.html">
+            <a class="nav-link" href="./viewinfo.php">
               <i class="material-icons">library_books</i>
               <p>Information</p>
             </a>
