@@ -61,21 +61,21 @@
               <p>Set-up Tenant</p>
             </a>
           </li>
-          <li class="nav-item active">
-            <a class="nav-link" href="./Setuppersonnel.phpd">
+          <li class="nav-item ">
+            <a class="nav-link" href="./Setuppersonnel.php">
               <i class="material-icons">create</i>
               <p>Set-up Personnel</p>
             </a>
           </li>
-          <li class="nav-item ">
+          <li class="nav-item">
             <a class="nav-link" href="./viewinfo.php">
               <i class="material-icons">library_books</i>
               <p>Tenant Information</p>
             </a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item active">
             <a class="nav-link" href="./viewbldg.php">
-              <i class="material-icons">create</i>
+              <i class="material-icons">library_books</i>
               <p>Building Information</p>
             </a>
           </li>
@@ -85,7 +85,6 @@
               <p>Tenant Request</p>
             </a>
           </li>
-
         </ul>
       </div>
     </div>

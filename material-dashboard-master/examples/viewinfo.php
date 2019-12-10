@@ -70,7 +70,19 @@
           <li class="nav-item active ">
             <a class="nav-link" href="./viewinfo.php">
               <i class="material-icons">library_books</i>
-              <p>Information</p>
+              <p>Tenant Information</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="./viewbldg.php">
+              <i class="material-icons">create</i>
+              <p>Building Information</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="./tenantreq.php">
+              <i class="material-icons">create</i>
+              <p>Tenant Request</p>
             </a>
           </li>
         </ul>
@@ -204,6 +216,66 @@
         </div>
       </nav>
       <!-- End Navbar -->
+      <div class="content">
+        <div class="row">
+          <div class="col-md-12">
+              <div class="col-md-12">
+            <div class="card ">
+              <div class="card-header">
+                <h4 class="card-title">Tenant's Information</h4>
+              </div>
+              <div class="card-body">
+                <div class="table-responsive">
+
+                  <?php
+
+                    include "dbconn.php";
+                    $sql = "SELECT * FROM tenantinfo";
+                    if($result = mysqli_query($link, $sql)){
+                        if(mysqli_num_rows($result) > 0){
+                            echo "<table class = 'table tablesorter'>";
+                                echo "<tr>";
+                                    echo "<th>Tenant ID</th>";
+                                    echo "<th>First Name</th>";
+                                    echo "<th>Last Name</th>";
+                                    echo "<th>Address</th>";
+                                    echo "<th>Email</th>";
+                                    echo "<th>Phone Number</th>";
+                                    echo "<th>Room Number</th>";
+                                     echo "<th>Action</th>";
+                                echo "</tr>";
+                            while($row = mysqli_fetch_array($result)){
+                                echo "<tr>";
+                                    echo "<td>" . $row['tenantID'] . "</td>";
+                                    echo "<td>" . $row['firstName'] . "</td>";
+                                    echo "<td>" . $row['lastName'] . "</td>";
+                                    echo "<td>" . $row['address'] . "</td>";
+                                    echo "<td>" . $row['email'] . "</td>";
+                                    echo "<td>" . $row['pnumber'] . "</td>";
+                                    echo "<td>" . $row['roomNumber'] . "</td>";
+
+
+                                   
+                                          echo "<td>";
+                                            echo "<a href='php/edit_info.php?tenantID=". $row['tenantID'] ."' title='Update Record' data-toggle='tooltip'><span class='btn btn-info'>Update</span></a>";
+                                            echo"</td>";
+                        
+                                echo "</tr>";
+                            }
+                            echo "</table>";
+                            // Free result set
+                            mysqli_free_result($result);
+                        } else{
+                            echo "No Accounts were found.";
+                        }
+                    } else{
+                        echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+                    }
+                     
+                    // Close connection
+                    mysqli_close($link);
+
+                  ?>
       
   <!--   Core JS Files   -->
   <script src="../assets/js/core/jquery.min.js"></script>

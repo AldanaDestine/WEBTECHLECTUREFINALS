@@ -70,7 +70,19 @@
           <li class="nav-item ">
             <a class="nav-link" href="./viewinfo.php">
               <i class="material-icons">library_books</i>
-              <p>Information</p>
+              <p>Tenant Information</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="./viewbldg.php">
+              <i class="material-icons">create</i>
+              <p>Building Information</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="./tenantreq.php">
+              <i class="material-icons">create</i>
+              <p>Tenant Request</p>
             </a>
           </li>
         </ul>
