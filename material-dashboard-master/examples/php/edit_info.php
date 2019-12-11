@@ -10,7 +10,7 @@ $firstName_err = $lastName_err = $address_err = $email_err = $pnumber_err = $roo
 // Processing form data when form is submitted
 if(isset($_POST["tenantID"]) && !empty($_POST["tenantID"])){
     // Get hidden input value
-    $userID = $_POST["tenantID"];
+    $tenantID = $_POST["tenantID"];
     
     $input_fname = trim($_POST["firstName"]);
     if(empty($input_fname)){
@@ -32,8 +32,6 @@ if(isset($_POST["tenantID"]) && !empty($_POST["tenantID"])){
     $input_address = trim($_POST["address"]);
     if(empty($input_address)){
         $address_err = "Please enter an address.";
-    } elseif(!filter_var($input_address, FILTER_VALIDATE_REGEXP, array("options"=>array("regexp"=>"/^[a-zA-Z\s]+$/")))){
-        $address_err = "Please enter a valid address.";
     } else{
         $address = $input_address;
     }
@@ -54,8 +52,6 @@ if(isset($_POST["tenantID"]) && !empty($_POST["tenantID"])){
     $input_roomNumber = trim($_POST["roomNumber"]);
     if(empty($input_roomNumber)){
         $roomNumber_err = "Please enter a room number.";
-    } elseif(!filter_var($input_roomNumber, FILTER_VALIDATE_REGEXP, array("options"=>array("regexp"=>"/^[a-zA-Z\s]+$/")))){
-        $roomNumber_err = "Please enter a room number.";
     } else{
         $roomNumber = $input_roomNumber;
     }
@@ -63,7 +59,7 @@ if(isset($_POST["tenantID"]) && !empty($_POST["tenantID"])){
     // Check input errors before inserting in database
     if(empty($firstName_err) && empty($lastName_err) && empty($address_err) && empty($email_err) &&empty($pnumber_err)&&empty($roomNumber_err)){
         // Prepare an update statement
-        $sql = "UPDATE users SET firstName=?, lastName=?, address=?, email=?, pnumber=?, roomNumber=? WHERE tenantID=?";
+        $sql = "UPDATE tenantinfo SET firstName=?, lastName=?, address=?, email=?, pnumber=?, roomNumber=? WHERE tenantID=?";
          
         if($stmt = mysqli_prepare($link, $sql)){
             // Bind variables to the prepared statement as parameters
@@ -73,23 +69,25 @@ if(isset($_POST["tenantID"]) && !empty($_POST["tenantID"])){
             $param_fname = $firstName;
             $param_lName = $lastName;
 
-            $param_email = $email;
+
             $param_address = $address;
+            $param_email = $email;
             $param_pnumber = $pnumber;
             $param_roomNumber = $roomNumber;
             $param_tenantID = $tenantID;
             
             // Attempt to execute the prepared statement
             if(mysqli_stmt_execute($stmt)){
-                // Records updated successfully. Redirect to landing page
+                //echo " Records updated successfully. Redirect to landing page";
                 header("location: ../viewinfo.php");
+
                 exit();
             } else{
                 echo "Something went wrong. Please try again later.". mysqli_error($link);
+
             }
         }
-         
-        // Close statement
+                             // Close statement
         mysqli_stmt_close($stmt);
     }
     
@@ -99,7 +97,7 @@ if(isset($_POST["tenantID"]) && !empty($_POST["tenantID"])){
     // Check existence of id parameter before processing further
     if(isset($_GET["tenantID"]) && !empty(trim($_GET["tenantID"]))){
         // Get URL parameter
-        $userID =  trim($_GET["tenantID"]);
+        $tenantID =  trim($_GET["tenantID"]);
         
         // Prepare a select statement
         $sql = "SELECT * FROM tenantinfo WHERE tenantID = ?";
