@@ -13,7 +13,7 @@
 
  The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. -->
 
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -22,7 +22,7 @@
   <link rel="icon" type="image/png" href="../assets/img/favicon.png">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <title>
-    InfoTech
+   InfoTech
   </title>
   <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
   <!--     Fonts and icons     -->
@@ -49,20 +49,20 @@
       </div>
       <div class="sidebar-wrapper">
         <ul class="nav">
-          <li class="nav-item ">
+          <li class="nav-item">
             <a class="nav-link" href="./dashboard.php">
               <i class="material-icons">dashboard</i>
               <p>Dashboard</p>
             </a>
           </li>
-          <li class="nav-item ">
+          <li class="nav-item active ">
             <a class="nav-link" href="./SetupTenant.php">
               <i class="material-icons">perm_identity</i>
               <p>Set-up Tenant</p>
             </a>
           </li>
-          <li class="nav-item active">
-            <a class="nav-link" href="./Setuppersonnel.phpd">
+          <li class="nav-item ">
+            <a class="nav-link" href="./Setuppersonnel.php">
               <i class="material-icons">create</i>
               <p>Set-up Personnel</p>
             </a>
@@ -85,13 +85,12 @@
               <p>Tenant Request</p>
             </a>
           </li>
-
         </ul>
       </div>
     </div>
     <div class="main-panel">
       <!-- Navbar -->
-      <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
+       <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
         <div class="container-fluid">
           <div class="navbar-wrapper">
             <a class="navbar-brand" href="#pablo">Diego Silang</a>
@@ -217,6 +216,213 @@
         </div>
       </nav>
       <!-- End Navbar -->
+                 <div class="content">
+        <div class="row">
+          <div class="col-md-12">
+              <div class="col-md-12">
+            <div class="card ">
+              <div class="card-header">
+                <h4 class="card-title">Personel</h4>
+              </div>
+              <div class="card-body">
+                <div class="table-responsive">
+
+                  <button type="button" class="btn" data-toggle="modal" data-target="#myModal">Add Personel</button>
+
+
+                  <?php
+
+                    include "dbconn.php";
+                    $sql = "SELECT * FROM personel_accounts";
+                    if($result = mysqli_query($link, $sql)){
+                        if(mysqli_num_rows($result) > 0){
+                            echo "<table class = 'table tablesorter'>";
+                                echo "<tr>";
+                                    echo "<th>Personel ID</th>";
+                                    echo "<th>Username</th>";
+                                    echo "<th>First Name</th>";
+                                    echo "<th>Last Name</th>";
+                                   
+                                    //echo "<th>Update</th>";
+                                    echo "<th>Delete</th>";
+                                echo "</tr>";
+                            while($row = mysqli_fetch_array($result)){
+                                echo "<tr>"; 
+                                     echo "<td>" . $row['personel_ID'] . "</td>";
+                                    echo "<td>" . $row['username'] . "</td>";
+                                    echo "<td>" . $row['firstName'] . "</td>";
+                                    echo "<td>" . $row['lastName'] . "</td>";
+                                  
+                                   
+                                       //   echo "<td>";
+                                         //   echo "<a href='php/edit_acc.php?personel_ID=". $row['personel_ID'] ."' title='Update Record' data-toggle='tooltip'><span class='btn btn-info'>Update</span></a>";
+                                          //  echo"</td>";
+                                            echo "<td>";
+                                            echo "<a href='php/delete_personel.php?personel_ID=". $row['personel_ID'] ."' title='Delete Record' data-toggle='tooltip'><span class='btn btn-danger'>Delete</span></a>";
+                                    echo "</td>";
+                                echo "</tr>";
+                            }
+                            echo "</table>";
+                            // Free result set
+                            mysqli_free_result($result);
+                        } else{
+                            echo "No Accounts were found.";
+                        }
+                    } else{
+                        echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+                    }
+                     
+                    // Close connection
+                    mysqli_close($link);
+
+                  ?>
+
+
+                  <?php
+                    // Include config file
+                    include "config.php";
+                     
+                    // Define variables and initialize with empty values
+                    $username = $firstName = $lastName = $password = "";
+                    //$name_err = $address_err = $salary_err = "";
+                    $username_err = $firstName_err = $lastName_err = $password_err = "";
+                     
+                    // Processing form data when form is submitted
+                    if($_SERVER["REQUEST_METHOD"] == "POST"){
+
+                 
+                        // Validate name
+                        
+                        $input_username = trim($_POST["username"]);
+                       if(empty($input_username)){
+                           $username_err = "Please enter a name.";
+                        
+                       } else{
+                           $username = $input_username;
+                       }
+
+
+                         $input_firstName = trim($_POST["firstName"]);
+                        if(empty($input_firstName)){
+                            $firstName_err = "Please enter a name.";
+                        } elseif(!filter_var($input_firstName, FILTER_VALIDATE_REGEXP, array("options"=>array("regexp"=>"/^[a-zA-Z\s]+$/")))){
+                            $firstName_err = "Please enter a valid name.";
+                        } else{
+                            $firstName = $input_firstName;
+                        }
+                        
+                        $input_lastName = trim($_POST["lastName"]);
+                        if(empty($input_lastName)){
+                            $lastName_err = "Please enter a name.";
+                        } elseif(!filter_var($input_lastName, FILTER_VALIDATE_REGEXP, array("options"=>array("regexp"=>"/^[a-zA-Z\s]+$/")))){
+                            $lastName_err = "Please enter a valid name.";
+                        } else{
+                            $lastName = $input_lastName;
+                        }
+
+                        $input_password = md5($_POST["password"]);
+                        if(empty($input_password)){
+                            $password_err = "Please enter a name.";
+                        }else{
+                            $password = $input_password;
+                        }
+                       
+                        
+                        // Check input errors before inserting in database
+                        if(empty($firstName_err) && empty($lastName_err) && empty($password_err) && empty($username_err)){
+                            // Prepare an insert statement
+                           
+                            $sql = "INSERT INTO personel_accounts (username, firstName, lastName, password) VALUES (?, ?, ?, ?)";
+                           
+                            if($stmt = mysqli_prepare($link, $sql)){
+                                // Bind variables to the prepared statement as parameters
+                                mysqli_stmt_bind_param($stmt, "ssss",$param_username, $param_firstName, $param_lastName, $param_password );
+                            
+                                // Set parameters
+                                $param_username = $username;
+                                $param_firstName = $firstName;
+                                $param_lastName = $lastName;
+                                $param_password = $password;
+                            
+                                
+                               
+                                
+                                // Attempt to execute the prepared statement
+                                if(mysqli_stmt_execute($stmt)){
+                                    // Records created successfully. Redirect to landing page
+                                    echo '<script type="text/javascript">'; 
+                                    echo 'alert("Personel Account Registered!. Thank You!");'; 
+                                    echo 'window.location.href = "Setuppersonnel.php";';
+                                    echo '</script>';
+                                } else{
+                                    echo "Something went wrong. Please try again later.";
+                                }
+                    // Close statement
+                            mysqli_stmt_close($stmt);
+                            }else {
+                        echo "Something's wrong with the query: " . mysqli_error($link);
+                    }
+                             
+                            
+                        }
+                        
+                        // Close connection
+                        mysqli_close($link);
+                    }
+                    ?>
+
+                  <div id="myModal" class="modal fade" role="dialog">
+                      <div class="modal-dialog">
+
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                           
+                          </div>
+                          <div class="modal-body">
+                            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+
+                            <div class="form-group <?php echo (!empty($username_err)) ? 'has-error' : ''; ?>">
+                            <label style="color: black;">username</label>
+                            <input style="color: black;"type="text" name="username" class="form-control" value="<?php echo $username; ?>">
+                            <span class="help-block"><?php echo $username_err;?></span>
+                        </div>
+                        <div class="form-group <?php echo (!empty($firstName_err)) ? 'has-error' : ''; ?>">
+                            <label style="color: black;">First Name</label>
+                            <input style="color: black;"type="text" name="firstName" class="form-control" value="<?php echo $firstName; ?>">
+                            <span class="help-block"><?php echo $firstName_err;?></span>
+                        </div>
+
+                        <div class="form-group <?php echo (!empty($lastName_err)) ? 'has-error' : ''; ?>">
+                            <label style="color: black;">Last Name</label>
+                            <input style="color: black;" type="text" name="lastName" class="form-control" value="<?php echo $lastName; ?>">
+                            <span class="help-block"><?php echo $lastName_err;?></span>
+                        </div>
+                        <div class="form-group <?php echo (!empty($password_err)) ? 'has-error' : ''; ?>">
+                            <label style="color: black;"> Password </label>
+                            <input style="color: black;" type="password" name="password" class="form-control" value="<?php echo $password; ?>">
+                            <span class="help-block"><?php echo $password_err;?></span>
+                        </div>
+                            </select>
+                          
+
+                        </div>
+    
+                        <div class="modal-footer">
+                              <input type="submit" class="btn btn-primary" value="Submit">
+                        <a href="Setuppersonnel.php" class="btn btn-default">Cancel</a>
+                        </div>
+                    </form>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        
       
   <!--   Core JS Files   -->
   <script src="../assets/js/core/jquery.min.js"></script>
