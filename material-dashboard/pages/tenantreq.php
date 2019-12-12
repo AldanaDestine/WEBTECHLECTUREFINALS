@@ -235,7 +235,7 @@
               <div class="col-md-12">
             <div class="card ">
               <div class="card-header">
-                <h4 class="card-title">Tenant's Information</h4>
+                <h4 class="card-title">Tenant's Request</h4>
               </div>
               <div class="card-body">
                 <div class="table-responsive">

@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.0.1
+-- version 4.9.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 12, 2019 at 03:01 PM
--- Server version: 10.3.16-MariaDB
--- PHP Version: 7.2.20
+-- Generation Time: Dec 12, 2019 at 03:56 PM
+-- Server version: 10.4.8-MariaDB
+-- PHP Version: 7.3.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -40,12 +40,12 @@ CREATE TABLE `bldginfo` (
 --
 
 INSERT INTO `bldginfo` (`roomID`, `roomNumber`, `roomRemarks`, `status`) VALUES
-(1, 211, 'patrick', 'Occupied'),
-(2, 212, '', 'Vacant'),
-(3, 213, 'Jayditch', 'Occupied'),
-(4, 214, 'Anne', 'Occupied'),
-(5, 215, '', 'Vacant'),
-(6, 216, 'destine', 'Occupied');
+(1, 211, 'not available', 'Occupied'),
+(2, 212, 'ready for occupancy', 'Vacant'),
+(3, 213, 'not available', 'Occupied'),
+(4, 214, 'not available', 'Occupied'),
+(5, 215, 'ready for occupancy', 'Vacant'),
+(6, 216, 'ready for occupancy', 'Vacant');
 
 -- --------------------------------------------------------
 
@@ -115,7 +115,7 @@ CREATE TABLE `tenantreq` (
 --
 
 INSERT INTO `tenantreq` (`tenantID`, `firstName`, `lastName`, `pnumber`, `reqTenant`, `roomNumber`) VALUES
-(1, 'patrick', 'responde', 9999999, 'usto ko ng hakdog', 3);
+(12, 'patrick', 'responde', 902892123, 'need to repair switch', 3);
 
 -- --------------------------------------------------------
 
@@ -135,9 +135,6 @@ CREATE TABLE `tenant_accounts` (
 --
 
 INSERT INTO `tenant_accounts` (`tenantID`, `firstName`, `lastName`, `roomNumber`) VALUES
-(1, 'a', 'b2', '32'),
-(2, 'guest', 'g', '45'),
-(3, 'f', 'd', '45'),
 (4, 'Patrick', 'Responde', '512');
 
 --
