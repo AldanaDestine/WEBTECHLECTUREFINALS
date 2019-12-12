@@ -235,7 +235,6 @@
                         if(mysqli_num_rows($result) > 0){
                             echo "<table class = 'table tablesorter'>";
                                 echo "<tr>";
-                                    echo "<th>Room ID</th>";
                                     echo "<th>Room Number</th>";
                                     echo "<th>Remarks</th>";
                                     echo "<th>Status</th>";
@@ -244,7 +243,6 @@
                                 echo "</tr>";
                             while($row = mysqli_fetch_array($result)){
                                 echo "<tr>";
-                                    echo "<td>" . $row['roomID'] . "</td>";
                                     echo "<td>" . $row['roomNumber'] . "</td>";
                                     echo "<td>" . $row['roomRemarks'] . "</td>";
                                     echo "<td>" . $row['status'] . "</td>";
