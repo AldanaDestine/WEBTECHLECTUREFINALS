@@ -147,20 +147,22 @@
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownProfile">
                   <a class="dropdown-item" href="#">Profile</a>
                   <a class="dropdown-item" href="#">Settings</a>
-                 <li class="dropdown-divider"></li>
-                  <form method="post" class="dropdown-item">
-                  <li class="nav-link"><button class="nav-item dropdown-item" name="logout">Log out</button></li>
-                </ul>
+                  <div class="dropdown-divider"></div>
+                   <form method="post">
+                  <button class="dropdown-item" name="logout">Log out</button>
+                
               </form>
               <?php
           if(isset($_POST['logout'])) {
             session_destroy();
             echo '<script type="text/javascript">';
             echo 'alert("You have been succesfully logout");';
-            echo 'window.location.href = "../../index.php";';
+            echo 'window.location.href = "../../index.html";';
             echo '</script>';
           }
           ?>
+                </div>
+      
               </li>
           </div>
         </div>
