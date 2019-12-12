@@ -75,13 +75,13 @@
           </li>
           <li class="nav-item">
             <a class="nav-link" href="./viewbldg.php">
-              <i class="material-icons">create</i>
+              <i class="material-icons">apartment</i>
               <p>Building Information</p>
             </a>
           </li>
           <li class="nav-item active">
             <a class="nav-link" href="./tenantreq.php">
-              <i class="material-icons">create</i>
+              <i class="material-icons">supervisor_account</i>
               <p>Tenant Request</p>
             </a>
           </li>
