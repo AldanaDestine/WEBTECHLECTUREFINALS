@@ -3,8 +3,8 @@
 require_once "dbconn.php";
  
 // Define variables and initialize with empty values
-$roomNumber = $roomRemarks = $status = "";
-$roomNumber_err = $roomRemarks_err = $status_err = "";
+$roomRemarks = $status = "";
+$roomRemarks_err = $status_err = "";
 
  
 // Processing form data when form is submitted
@@ -23,19 +23,18 @@ if(isset($_POST["roomID"]) && !empty($_POST["roomID"])){
         $roomRemarks_err = "Please enter a remarks.";
     } else{
         $roomRemarks = $input_roomRemarks;
-    }
+    }    
     
     // Check input errors before inserting in database
-    if(empty($roomNumber_err) && empty($roomRemarks_err) && empty($status_err)){
+    if(empty($roomRemarks_err) && empty($status_err)){
         // Prepare an update statement
-        $sql = "UPDATE bldginfo SET roomNumber=?, roomRemarks=?, status=? WHERE roomID=?";
+        $sql = "UPDATE bldginfo SET roomRemarks=?, status=? WHERE roomID=?";
          
         if($stmt = mysqli_prepare($link, $sql)){
             // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "sssi", $param_roomNumber, $param_roomRemarks, $param_status, $param_roomID);
+            mysqli_stmt_bind_param($stmt, "ssi", $param_roomRemarks, $param_status, $param_roomID);
             
             // Set parameters
-            $param_roomNumber = $roomNumber;
             $param_roomRemarks = $roomRemarks;
             $param_status = $status;
             $param_roomID = $roomID;
@@ -82,7 +81,6 @@ if(isset($_POST["roomID"]) && !empty($_POST["roomID"])){
                     $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
                     
                     // Retrieve individual field value
-                $roomNumber = $row["roomNumber"];
                 $roomRemarks = $row["roomRemarks"];
                 $status = $row["status"];
                 } else{
@@ -133,7 +131,7 @@ if(isset($_POST["roomID"]) && !empty($_POST["roomID"])){
                     </div>
                     <p>Please edit the input values and submit to update the record.</p>
                     <form action="<?php echo htmlspecialchars(basename($_SERVER['REQUEST_URI'])); ?>" method="post">
-                        <div class="form-group <?php echo (!empty($firstName_err)) ? 'has-error' : ''; ?>">
+                        <div class="form-group <?php echo (!empty($status_err)) ? 'has-error' : ''; ?>">
                             <label>Status:</label>
                             <select name = "status">
                             <option>Vacant</option>
@@ -142,12 +140,11 @@ if(isset($_POST["roomID"]) && !empty($_POST["roomID"])){
                             <span class="help-block"><?php echo $status_err;?></span>
                                                     
                         </div>
-                        <div class="form-group <?php echo (!empty($lastName_err)) ? 'has-error' : ''; ?>">
+                        <div class="form-group <?php echo (!empty($roomRemarks_err)) ? 'has-error' : ''; ?>">
                             <label>Remarks</label>
                             <input type="text" name="roomRemarks" class="form-control" value="<?php echo $roomRemarks; ?>">
                             <span class="help-block"><?php echo $roomRemarks_err;?></span>
                         </div>
-
                         <div class="modal-footer">
                                 <input type="hidden" name="roomID" value="<?php echo $roomID; ?>"/>
                               <input type="submit" class="btn btn-primary" value="Submit">
