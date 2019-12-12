@@ -9,13 +9,13 @@ if (isset($_POST["btnLogin"])) {
 	# code...
 	$username = $_POST["username"];
 	$password = $_POST["password"];
-	$query = "SELECT * FROM personel_accounts WHERE username='$username' AND password='$password'";
+	$query = "SELECT * FROM personnel_accounts WHERE username='$username' AND password='$password'";
 	$result = mysqli_query($conn, $query);
 	if (mysqli_num_rows($result) > 0) {
 		# code...
 		while ($row = mysqli_fetch_assoc($result)) {
 			# code...
-			if (($row["type"] == "Personel")) {
+			if (($row["type"] == "Personnel")) {
 				# code...
 				//$_SESSION['LoginUser'] = $row["email"];
 				$_SESSION['login'] = true;

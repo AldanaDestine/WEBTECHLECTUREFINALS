@@ -232,23 +232,23 @@
               <div class="col-md-12">
             <div class="card ">
               <div class="card-header">
-                <h4 class="card-title">Personel</h4>
+                <h4 class="card-title">Personnel</h4>
               </div>
               <div class="card-body">
                 <div class="table-responsive">
 
-                  <button type="button" class="btn" data-toggle="modal" data-target="#myModal">Add Personel</button>
+                  <button type="button" class="btn" data-toggle="modal" data-target="#myModal">Add Personnel</button>
 
 
                   <?php
 
                     include "dbconn.php";
-                    $sql = "SELECT * FROM personel_accounts";
+                    $sql = "SELECT * FROM personnel_accounts";
                     if($result = mysqli_query($link, $sql)){
                         if(mysqli_num_rows($result) > 0){
                             echo "<table class = 'table tablesorter'>";
                                 echo "<tr>";
-                                    echo "<th>Personel ID</th>";
+                                    echo "<th>Personnel ID</th>";
                                     echo "<th>Username</th>";
                                     echo "<th>First Name</th>";
                                     echo "<th>Last Name</th>";
@@ -258,7 +258,7 @@
                                 echo "</tr>";
                             while($row = mysqli_fetch_array($result)){
                                 echo "<tr>"; 
-                                     echo "<td>" . $row['personel_ID'] . "</td>";
+                                     echo "<td>" . $row['personnel_ID'] . "</td>";
                                     echo "<td>" . $row['username'] . "</td>";
                                     echo "<td>" . $row['firstName'] . "</td>";
                                     echo "<td>" . $row['lastName'] . "</td>";                               
@@ -267,7 +267,7 @@
                                          //   echo "<a href='php/edit_acc.php?personel_ID=". $row['personel_ID'] ."' title='Update Record' data-toggle='tooltip'><span class='btn btn-info'>Update</span></a>";
                                           //  echo"</td>";
                                             echo "<td>";
-                                            echo "<a href='php/delete_personel.php?personel_ID=". $row['personel_ID'] ."' title='Delete Record' data-toggle='tooltip'><span class='btn btn-danger'>Delete</span></a>";
+                                            echo "<a href='php/delete_personnel.php?personnel_ID=". $row['personnel_ID'] ."' title='Delete Record' data-toggle='tooltip'><span class='btn btn-danger'>Delete</span></a>";
                                     echo "</td>";
                                 echo "</tr>";
                             }
@@ -343,7 +343,7 @@
                         if(empty($firstName_err) && empty($lastName_err) && empty($password_err) && empty($username_err) && empty($type_err)){
                             // Prepare an insert statement
                            
-                            $sql = "INSERT INTO personel_accounts (username, firstName, lastName, password) VALUES (?, ?, ?, ?)";
+                            $sql = "INSERT INTO personnel_accounts (username, firstName, lastName, password) VALUES (?, ?, ?, ?)";
                            
                             if($stmt = mysqli_prepare($link, $sql)){
                                 // Bind variables to the prepared statement as parameters
@@ -362,7 +362,7 @@
                                 if(mysqli_stmt_execute($stmt)){
                                     // Records created successfully. Redirect to landing page
                                     echo '<script type="text/javascript">'; 
-                                    echo 'alert("Personel Account Registered!. Thank You!");'; 
+                                    echo 'alert("Personnel Account Registered!. Thank You!");'; 
                                     echo 'window.location.href = "Setuppersonnel.php";';
                                     echo '</script>';
                                 } else{
