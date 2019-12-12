@@ -226,6 +226,8 @@
               </div>
               <div class="card-body">
                 <div class="table-responsive">
+                  <button type="button" class="btn" data-toggle="modal" data-target="#myModal">Add Tenant's Informtation</button>
+
 
                   <?php
 
@@ -276,6 +278,174 @@
                     mysqli_close($link);
 
                   ?>
+                  <?php
+                    // Include config file
+                    include "config.php";
+                     
+                    // Define variables and initialize with empty values
+                   $firstName = $lastName = $address = $email = $pnumber = $roomNumber = "";
+                    //$name_err = $address_err = $salary_err = "";
+                   $firstName_err = $lastName_err = $address_err = $email_err = $pnumber_err = $roomNumber_err = "";
+                     
+                    // Processing form data when form is submitted
+                    if($_SERVER["REQUEST_METHOD"] == "POST"){
+
+                 
+                        // Validate name
+                         $input_firstName = trim($_POST["firstName"]);
+                        if(empty($input_firstName)){
+                            $firstName_err = "Please enter a name.";
+                        } elseif(!filter_var($input_firstName, FILTER_VALIDATE_REGEXP, array("options"=>array("regexp"=>"/^[a-zA-Z\s]+$/")))){
+                            $firstName_err = "Please enter a valid name.";
+                        } else{
+                            $firstName = $input_firstName;
+                        }
+                        
+                        $input_lastName = trim($_POST["lastName"]);
+                        if(empty($input_lastName)){
+                            $lastName_err = "Please enter a name.";
+                        } elseif(!filter_var($input_lastName, FILTER_VALIDATE_REGEXP, array("options"=>array("regexp"=>"/^[a-zA-Z\s]+$/")))){
+                            $lastName_err = "Please enter a valid name.";
+                        } else{
+                            $lastName = $input_lastName;
+                        }
+
+                        $input_address = trim($_POST["address"]);
+                        if(empty($input_address)){
+                         $address_err = "Please enter an address.";
+                          } else{
+                         $address = $input_address;
+                           }
+
+                        $input_email = trim($_POST["email"]);
+                         if(empty($input_email)){
+                         $email_err = "Please enter a name.";
+                         } else{
+                         $email = $input_email;
+                          }
+
+                         $input_pnumber = trim($_POST["pnumber"]);
+                           if(empty($input_pnumber)){
+                            $pnumber_err = "Please enter a number.";
+                            } else{
+                           $pnumber = $input_pnumber;
+                               }
+
+                        $input_roomNumber = trim($_POST["roomNumber"]);
+                        if(empty($input_roomNumber)){
+                            $roomNumber_err = "Please enter a name.";
+                        }else{
+                            $roomNumber = $input_roomNumber;
+                        }
+                       
+                        
+                        // Check input errors before inserting in database
+                        if(empty($firstName_err) && empty($lastName_err) && empty($address_err) && empty($email_err) &&empty($pnumber_err)&&empty($roomNumber_err)){
+                            // Prepare an insert statement
+                            $sql = "INSERT INTO tenantinfo (firstName, lastName, address, email, pnumber, roomNumber) VALUES (?, ?, ?, ?, ?, ?)";
+                             
+                            if($stmt = mysqli_prepare($link, $sql)){
+                                // Bind variables to the prepared statement as parameters
+                               mysqli_stmt_bind_param($stmt, "ssssss", $param_fname, $param_lName, $param_address, $param_email,  $param_pnumber, $param_roomNumber);
+                                
+                                // Set parameters
+                               
+                               $param_fname = $firstName;
+                               $param_lName = $lastName;
+
+
+                                $param_address = $address;
+                                 $param_email = $email;
+                               $param_pnumber = $pnumber;
+                               $param_roomNumber = $roomNumber;
+
+                               
+                                
+                                // Attempt to execute the prepared statement
+                                if(mysqli_stmt_execute($stmt)){
+                                    // Records created successfully. Redirect to landing page
+                                    echo '<script type="text/javascript">'; 
+                                    echo 'alert("Tenant Information Added!. Thank You!");'; 
+                                    echo 'window.location.href = "viewinfo.php";';
+                                    echo '</script>';
+                                } else{
+                                    echo "Something went wrong. Please try again later.";
+                                }
+                    // Close statement
+                            mysqli_stmt_close($stmt);
+                            }else {
+                        echo "Something's wrong with the query: " . mysqli_error($link);
+                    }
+                             
+                            
+                        }
+                        
+                        // Close connection
+                        mysqli_close($link);
+                    }
+                    ?>
+
+                  <div id="myModal" class="modal fade" role="dialog">
+                      <div class="modal-dialog">
+
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                           
+                          </div>
+                          <div class="modal-body">
+                            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+
+                        <div class="form-group <?php echo (!empty($firstName_err)) ? 'has-error' : ''; ?>">
+                            <label style="color: black;">First Name</label>
+                            <input style="color: black;"type="text" name="firstName" class="form-control" value="<?php echo $firstName; ?>">
+                            <span class="help-block"><?php echo $firstName_err;?></span>
+                        </div>
+
+                        <div class="form-group <?php echo (!empty($lastName_err)) ? 'has-error' : ''; ?>">
+                            <label style="color: black;">Last Name</label>
+                            <input style="color: black;" type="text" name="lastName" class="form-control" value="<?php echo $lastName; ?>">
+                            <span class="help-block"><?php echo $lastName_err;?></span>
+                        </div>
+                        <div class="form-group <?php echo (!empty($address_err)) ? 'has-error' : ''; ?>">
+                            <label style="color: black;">Address</label>
+                            <input style="color: black;" type="text" name="address" class="form-control" value="<?php echo $address; ?>">
+                            <span class="help-block"><?php echo $address_err;?></span>
+                        </div>
+                        <div class="form-group <?php echo (!empty($email_err)) ? 'has-error' : ''; ?>">
+                            <label style="color: black;">Email</label>
+                            <input style="color: black;" type="text" name="email" class="form-control" value="<?php echo $email; ?>">
+                            <span class="help-block"><?php echo $email_err;?></span>
+                        </div>
+                        <div class="form-group <?php echo (!empty($pnumber_err)) ? 'has-error' : ''; ?>">
+                            <label style="color: black;">Phone Number</label>
+                            <input style="color: black;" type="text" name="pnumber" class="form-control" value="<?php echo $pnumber; ?>">
+                            <span class="help-block"><?php echo $pnumber_err;?></span>
+                        </div>
+                        <div class="form-group <?php echo (!empty($roomNumber_err)) ? 'has-error' : ''; ?>">
+                            <label style="color: black;">Room Number </label>
+                            <input style="color: black;" type="text" name="roomNumber" class="form-control" value="<?php echo $roomNumber; ?>">
+                            <span class="help-block"><?php echo $roomNumber_err;?></span>
+                        </div>
+                            </select>
+                          
+
+                        </div>
+    
+                        <div class="modal-footer">
+                              <input type="submit" class="btn btn-primary" value="Submit">
+                        <a href="viewinfo.php" class="btn btn-default">Cancel</a>
+                        </div>
+                    </form>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
       
   <!--   Core JS Files   -->
   <script src="../assets/js/core/jquery.min.js"></script>
