@@ -216,6 +216,60 @@
         </div>
       </nav>
       <!-- End Navbar -->
+       <div class="content">
+        <div class="row">
+          <div class="col-md-12">
+              <div class="col-md-12">
+            <div class="card ">
+              <div class="card-header">
+                <h4 class="card-title">Building Information</h4>
+              </div>
+              <div class="card-body">
+                <div class="table-responsive">
+
+                  <?php
+
+                    include "dbconn.php";
+                    $sql = "SELECT * FROM bldginfo";
+                    if($result = mysqli_query($link, $sql)){
+                        if(mysqli_num_rows($result) > 0){
+                            echo "<table class = 'table tablesorter'>";
+                                echo "<tr>";
+                                    echo "<th>Room ID</th>";
+                                    echo "<th>Room Number</th>";
+                                    echo "<th>Remarks</th>";
+                                    echo "<th>Status</th>";
+                                    echo "<th>Action</th>";
+                                   
+                                echo "</tr>";
+                            while($row = mysqli_fetch_array($result)){
+                                echo "<tr>";
+                                    echo "<td>" . $row['roomID'] . "</td>";
+                                    echo "<td>" . $row['roomNumber'] . "</td>";
+                                    echo "<td>" . $row['roomRemarks'] . "</td>";
+                                    echo "<td>" . $row['status'] . "</td>";
+                                    
+
+                                     echo "<td>";
+                                            echo "<a href='php/edit_bldg.php?roomID=". $row['roomID'] ."' title='Update Record' data-toggle='tooltip'><span class='btn btn-info'>Update</span></a>";
+                                            echo"</td>";
+                        
+                                echo "</tr>";
+                            }
+                            echo "</table>";
+                            // Free result set
+                            mysqli_free_result($result);
+                        } else{
+                            echo "No request were found.";
+                        }
+                    } else{
+                        echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+                    }
+                     
+                    // Close connection
+                    mysqli_close($link);
+
+                  ?>
       
   <!--   Core JS Files   -->
   <script src="../assets/js/core/jquery.min.js"></script>

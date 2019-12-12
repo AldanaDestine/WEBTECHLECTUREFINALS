@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.0.1
+-- version 4.9.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 11, 2019 at 04:24 PM
--- Server version: 10.3.16-MariaDB
--- PHP Version: 7.2.20
+-- Generation Time: Dec 12, 2019 at 01:17 PM
+-- Server version: 10.4.8-MariaDB
+-- PHP Version: 7.3.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -21,6 +21,19 @@ SET time_zone = "+00:00";
 --
 -- Database: `webtechlecture`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `bldginfo`
+--
+
+CREATE TABLE `bldginfo` (
+  `roomID` int(11) NOT NULL,
+  `roomNumber` int(11) NOT NULL,
+  `roomRemarks` varchar(255) NOT NULL,
+  `status` varchar(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
