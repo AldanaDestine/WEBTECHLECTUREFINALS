@@ -239,8 +239,8 @@
                                     echo "<th>First Name</th>";
                                     echo "<th>Last Name</th>";
                                     echo "<th>Phone Number</th>";
-                                    echo "<th>Room Number</th>";
                                     echo "<th>Request</th>";
+                                    echo "<th>Room Number</th>";
                                 echo "</tr>";
                             while($row = mysqli_fetch_array($result)){
                                 echo "<tr>";
