@@ -12,7 +12,13 @@
 =========================================================
 
  The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. -->
-
+<?php  
+    session_start();
+    include("functions.php");
+    if($_SESSION['login'] !==true){
+      header('location:../../../index.php');
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -207,11 +213,21 @@
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownProfile">
                   <a class="dropdown-item" href="#">Profile</a>
                   <a class="dropdown-item" href="#">Settings</a>
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="#">Log out</a>
-                </div>
+                 <li class="dropdown-divider"></li>
+                  <form method="post" class="dropdown-item">
+                  <li class="nav-link"><button class="nav-item dropdown-item" name="logout">Log out</button></li>
+                </ul>
+              </form>
+              <?php
+          if(isset($_POST['logout'])) {
+            session_destroy();
+            echo '<script type="text/javascript">';
+            echo 'alert("You have been succesfully logout");';
+            echo 'window.location.href = "../../index.php";';
+            echo '</script>';
+          }
+          ?>
               </li>
-            </ul>
           </div>
         </div>
       </nav>
