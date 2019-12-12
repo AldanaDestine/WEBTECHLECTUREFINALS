@@ -242,7 +242,6 @@
                                     echo "<th>Username</th>";
                                     echo "<th>First Name</th>";
                                     echo "<th>Last Name</th>";
-                                    echo "<th>Account Type</th>";
                                    
                                     //echo "<th>Update</th>";
                                     echo "<th>Delete</th>";
@@ -252,8 +251,7 @@
                                      echo "<td>" . $row['personel_ID'] . "</td>";
                                     echo "<td>" . $row['username'] . "</td>";
                                     echo "<td>" . $row['firstName'] . "</td>";
-                                    echo "<td>" . $row['lastName'] . "</td>";
-                                    echo "<td>" . $row['type'] . "</td>";                                  
+                                    echo "<td>" . $row['lastName'] . "</td>";                               
                                    
                                        //   echo "<td>";
                                          //   echo "<a href='php/edit_acc.php?personel_ID=". $row['personel_ID'] ."' title='Update Record' data-toggle='tooltip'><span class='btn btn-info'>Update</span></a>";
@@ -284,9 +282,9 @@
                     include "config.php";
                      
                     // Define variables and initialize with empty values
-                    $username = $firstName = $lastName = $password = $type = "";
+                    $username = $firstName = $lastName = $password  = "";
                     //$name_err = $address_err = $salary_err = "";
-                    $username_err = $firstName_err = $lastName_err = $password_err = $type_err ="";
+                    $username_err = $firstName_err = $lastName_err = $password_err ="";
                      
                     // Processing form data when form is submitted
                     if($_SERVER["REQUEST_METHOD"] == "POST"){
@@ -321,12 +319,6 @@
                             $lastName = $input_lastName;
                         }
 
-                         $input_type = md5($_POST["type"]);
-                        if(empty($input_type)){
-                            $type_err = "Please enter a name.";
-                        }else{
-                            $type = $input_type;
-                        }
 
 
                         $input_password = md5($_POST["password"]);
@@ -341,17 +333,16 @@
                         if(empty($firstName_err) && empty($lastName_err) && empty($password_err) && empty($username_err) && empty($type_err)){
                             // Prepare an insert statement
                            
-                            $sql = "INSERT INTO personel_accounts (username, firstName, lastName,type, password) VALUES (?, ?, ?, ?, ?)";
+                            $sql = "INSERT INTO personel_accounts (username, firstName, lastName, password) VALUES (?, ?, ?, ?)";
                            
                             if($stmt = mysqli_prepare($link, $sql)){
                                 // Bind variables to the prepared statement as parameters
-                                mysqli_stmt_bind_param($stmt, "sssss",$param_username, $param_firstName, $param_lastName, $param_type, $param_password);
+                                mysqli_stmt_bind_param($stmt, "ssss",$param_username, $param_firstName, $param_lastName, $param_password);
                             
                                 // Set parameters
                                 $param_username = $username;
                                 $param_firstName = $firstName;
                                 $param_lastName = $lastName;
-                                $param_type = $type;
                                 $param_password = $password;
                             
                                 
@@ -410,18 +401,7 @@
                             <span class="help-block"><?php echo $lastName_err;?></span>
                         </div>
 
-                        <div class="form-group <?php echo (!empty($type_err)) ? 'has-error' : ''; ?>">
-                            <label style="color: black;">User Type</label>
-                            <select style="color: black;" name="type" class="form-control" value="<?php echo $type; ?>" >
-                              <option value="" class ="sr-only" >Select</option>
-                              <option value="admin">Admin</option>
-                              <option value="tenant">Tenant</option>
-                              <option value="personnel">Personnel</option>
-                              
-                            </select>
-                            <!-- <input style="color: black;" type="text" name="utype" class="form-control" value="<?php echo $utype; ?>"> -->
-                            <span class="help-block"><?php echo $type_err;?></span>
-                        </div>
+
 
                         <div class="form-group <?php echo (!empty($password_err)) ? 'has-error' : ''; ?>">
                             <label style="color: black;"> Password </label>
