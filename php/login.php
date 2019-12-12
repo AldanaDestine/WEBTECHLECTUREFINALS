@@ -19,7 +19,7 @@ if (isset($_POST["btnLogin"])) {
 				# code...
 				//$_SESSION['LoginUser'] = $row["email"];
 				$_SESSION['login'] = true;
-				header('Location: ../material-dashboard/pages/dashboard.php');
+				header('Location: ../material-dashboard/pages/viewinfo.php');
 			}else{
 				echo '<script type="text/javascript">'; 
 				echo 'alert("Invalid Account!");'; 
