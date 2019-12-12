@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 12, 2019 at 02:43 PM
--- Server version: 10.4.6-MariaDB
--- PHP Version: 7.3.9
+-- Generation Time: Dec 12, 2019 at 03:01 PM
+-- Server version: 10.3.16-MariaDB
+-- PHP Version: 7.2.20
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -34,6 +34,18 @@ CREATE TABLE `bldginfo` (
   `roomRemarks` varchar(255) NOT NULL,
   `status` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `bldginfo`
+--
+
+INSERT INTO `bldginfo` (`roomID`, `roomNumber`, `roomRemarks`, `status`) VALUES
+(1, 211, 'patrick', 'Occupied'),
+(2, 212, '', 'Vacant'),
+(3, 213, 'Jayditch', 'Occupied'),
+(4, 214, 'Anne', 'Occupied'),
+(5, 215, '', 'Vacant'),
+(6, 216, 'destine', 'Occupied');
 
 -- --------------------------------------------------------
 
@@ -69,7 +81,7 @@ CREATE TABLE `tenantinfo` (
   `lastName` varchar(255) NOT NULL,
   `address` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
-  `pnumber` int(11) NOT NULL,
+  `pnumber` varchar(11) NOT NULL,
   `roomNumber` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -78,7 +90,10 @@ CREATE TABLE `tenantinfo` (
 --
 
 INSERT INTO `tenantinfo` (`tenantID`, `firstName`, `lastName`, `address`, `email`, `pnumber`, `roomNumber`) VALUES
-(1, 'patrickasd', 'responde', 'bukaneg street, legarda, baguio city', '2164165@slu.edu.ph', 999999999, '3');
+(1, 'Patrick', 'Responde', 'bukaneg street, legarda, baguio city', '2152751@slu.edu.ph', '09123456789', '211'),
+(2, 'Jayditch', 'Balansi', 'Tuding, Baguio City', 'jayditch@email.com', '09876543210', '213'),
+(3, 'Anne', 'Manahan', 'Goshen, Bakakeng, Baguio City', '2164165@slu.edu.ph', '09653287415', '214'),
+(4, 'Destine', 'Aldana', 'San Luis Baguio City', 'aldana@email.com', '09321654987', '216');
 
 -- --------------------------------------------------------
 
@@ -130,6 +145,12 @@ INSERT INTO `tenant_accounts` (`tenantID`, `firstName`, `lastName`, `roomNumber`
 --
 
 --
+-- Indexes for table `bldginfo`
+--
+ALTER TABLE `bldginfo`
+  ADD PRIMARY KEY (`roomID`);
+
+--
 -- Indexes for table `personel_accounts`
 --
 ALTER TABLE `personel_accounts`
@@ -152,10 +173,22 @@ ALTER TABLE `tenant_accounts`
 --
 
 --
+-- AUTO_INCREMENT for table `bldginfo`
+--
+ALTER TABLE `bldginfo`
+  MODIFY `roomID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
 -- AUTO_INCREMENT for table `personel_accounts`
 --
 ALTER TABLE `personel_accounts`
   MODIFY `personel_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT for table `tenantinfo`
+--
+ALTER TABLE `tenantinfo`
+  MODIFY `tenantID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `tenant_accounts`

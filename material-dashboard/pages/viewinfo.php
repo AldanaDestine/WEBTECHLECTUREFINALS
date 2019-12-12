@@ -226,7 +226,7 @@
               </div>
               <div class="card-body">
                 <div class="table-responsive">
-                  <button type="button" class="btn" data-toggle="modal" data-target="#myModal">Add Tenant's Informtation</button>
+                  <button type="button" class="btn" data-toggle="modal" data-target="#myModal">Add Tenant's Information</button>
 
 
                   <?php
@@ -237,7 +237,6 @@
                         if(mysqli_num_rows($result) > 0){
                             echo "<table class = 'table tablesorter'>";
                                 echo "<tr>";
-                                    echo "<th>Tenant ID</th>";
                                     echo "<th>First Name</th>";
                                     echo "<th>Last Name</th>";
                                     echo "<th>Address</th>";
@@ -248,7 +247,6 @@
                                 echo "</tr>";
                             while($row = mysqli_fetch_array($result)){
                                 echo "<tr>";
-                                    echo "<td>" . $row['tenantID'] . "</td>";
                                     echo "<td>" . $row['firstName'] . "</td>";
                                     echo "<td>" . $row['lastName'] . "</td>";
                                     echo "<td>" . $row['address'] . "</td>";
