@@ -55,12 +55,6 @@
       </div>
       <div class="sidebar-wrapper">
         <ul class="nav">
-          <li class="nav-item">
-            <a class="nav-link" href="./dashboard.php">
-              <i class="material-icons">dashboard</i>
-              <p>Dashboard</p>
-            </a>
-          </li>
           <li class="nav-item active ">
             <a class="nav-link" href="./SetupTenant.php">
               <i class="material-icons">perm_identity</i>
