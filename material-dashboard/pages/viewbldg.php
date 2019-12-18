@@ -277,9 +277,9 @@
                     include "config.php";
                      
                     // Define variables and initialize with empty values
-                   $roomNumber = $roomRemarks = "";
+                   $roomNumber = $roomRemarks = $status = "";
                     //$name_err = $address_err = $salary_err = "";
-                   $roomNumber_err = $roomRemarks_err = "";
+                   $roomNumber_err = $roomRemarks_err = $status_err = "";
                      
                     // Processing form data when form is submitted
                     if($_SERVER["REQUEST_METHOD"] == "POST"){
@@ -303,18 +303,19 @@
                          
                         
                         // Check input errors before inserting in database
-                        if(empty($roomNumber_err) && empty($roomRemarks_err)){
+                        if(empty($roomNumber_err) && empty($roomRemarks_err) && empty($status_err)){
                             // Prepare an insert statement
                             $sql = "INSERT INTO bldginfo (roomNumber, roomRemarks) VALUES (?, ?)";
                              
                             if($stmt = mysqli_prepare($link, $sql)){
                                 // Bind variables to the prepared statement as parameters
-                               mysqli_stmt_bind_param($stmt, "ss", $param_roomNumber, $param_roomRemarks);
+                               mysqli_stmt_bind_param($stmt, "sss", $param_roomNumber, $param_roomRemarks, $param_status);
                                 
                                 // Set parameters
                                
                                $param_roomNumber = $roomNumber;
                                $param_roomRemarks = $roomRemarks;
+                               $param_status = $status;
 
                                
                                 
@@ -365,7 +366,14 @@
                             <input style="color: black;" type="text" name="roomRemarks" class="form-control" value="<?php echo $roomRemarks; ?>">
                             <span class="help-block"><?php echo $roomRemarks_err;?></span>
                         </div>
-                            </select>
+                        <div class="form-group <?php echo (!empty($status_err)) ? 'has-error' : ''; ?>">
+                            <label>Status:</label>
+                            <select name = "status">
+                            <option>Vacant</option>
+                            <option>Occupied</option>
+                        </select>
+                            <span class="help-block"><?php echo $status_err;?></span>
+                          
                           
 
                         </div>

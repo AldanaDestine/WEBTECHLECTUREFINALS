@@ -3,8 +3,8 @@
 require_once "dbconn.php";
  
 // Define variables and initialize with empty values
-$roomRemarks  = "";
-$roomRemarks_err = "";
+$roomRemarks = $status = "";
+$roomRemarks_err = $status_err = "";
 
  
 // Processing form data when form is submitted
@@ -12,7 +12,12 @@ if(isset($_POST["roomID"]) && !empty($_POST["roomID"])){
     // Get hidden input value
     $roomID = $_POST["roomID"];
     
-    
+    $input_status = trim($_POST["status"]);
+    if(empty($input_status)){
+        $status_err = "Please select a status.";
+    } else{
+        $status = $input_status;
+    }
     $input_roomRemarks = trim($_POST["roomRemarks"]);
     if(empty($input_roomRemarks)){
         $roomRemarks_err = "Please enter a remarks.";
@@ -27,11 +32,11 @@ if(isset($_POST["roomID"]) && !empty($_POST["roomID"])){
          
         if($stmt = mysqli_prepare($link, $sql)){
             // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "si", $param_roomRemarks,  $param_roomID);
+            mysqli_stmt_bind_param($stmt, "ssi", $param_roomRemarks, $param_status, $param_roomID);
             
             // Set parameters
             $param_roomRemarks = $roomRemarks;
-            
+            $param_status = $status;
             $param_roomID = $roomID;
             
             // Attempt to execute the prepared statement
@@ -77,7 +82,7 @@ if(isset($_POST["roomID"]) && !empty($_POST["roomID"])){
                     
                     // Retrieve individual field value
                 $roomRemarks = $row["roomRemarks"];
-               
+                $status = $row["status"];
                 } else{
                     // URL doesn't contain valid id. Redirect to error page
                     echo "error!";
@@ -126,7 +131,13 @@ if(isset($_POST["roomID"]) && !empty($_POST["roomID"])){
                     </div>
                     <p>Please edit the input values and submit to update the record.</p>
                     <form action="<?php echo htmlspecialchars(basename($_SERVER['REQUEST_URI'])); ?>" method="post">
-                        
+                        <div class="form-group <?php echo (!empty($status_err)) ? 'has-error' : ''; ?>">
+                            <label>Status:</label>
+                            <select name = "status">
+                            <option>Vacant</option>
+                            <option>Occupied</option>
+                        </select>
+                            <span class="help-block"><?php echo $status_err;?></span>
                                                     
                         </div>
                         <div class="form-group <?php echo (!empty($roomRemarks_err)) ? 'has-error' : ''; ?>">
