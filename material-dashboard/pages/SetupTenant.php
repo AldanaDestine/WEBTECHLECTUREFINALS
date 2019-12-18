@@ -252,8 +252,8 @@
                                     echo "<th>Tenant ID</th>";
                                     echo "<th>First Name</th>";
                                     echo "<th>Last Name</th>";
+                                    echo "<th>Contact Number";
                                     echo "<th>Room Number</th>";
-                                    echo "<th>Update</th>";
                                     echo "<th>Delete</th>";
                                 echo "</tr>";
                             while($row = mysqli_fetch_array($result)){
@@ -261,11 +261,9 @@
                                     echo "<td>" . $row['tenantID'] . "</td>";
                                     echo "<td>" . $row['firstName'] . "</td>";
                                     echo "<td>" . $row['lastName'] . "</td>";
+                                    echo "<td>" . $row['conNum']. "</td>";
                                     echo "<td>" . $row['roomNumber'] . "</td>";
-                                   
-                                          echo "<td>";
-                                            echo "<a href='php/edit_acc.php?tenantID=". $row['tenantID'] ."' title='Update Record' data-toggle='tooltip'><span class='btn btn-info'>Update</span></a>";
-                                            echo"</td>";
+                                  
                                             echo "<td>";
                                             echo "<a href='php/delete_tenant.php?tenantID=". $row['tenantID'] ."' title='Delete Record' data-toggle='tooltip'><span class='btn btn-danger'>Delete</span></a>";
                                     echo "</td>";
@@ -292,9 +290,9 @@
                     include "config.php";
                      
                     // Define variables and initialize with empty values
-                   $firstName = $lastName = $roomNumber = "";
+                   $firstName = $lastName = $roomNumber = $conNum =  "";
                     //$name_err = $address_err = $salary_err = "";
-                    $firstName_err = $lastName_err = $roomNumber_err = "";
+                    $firstName_err = $lastName_err = $roomNumber_err = $conNum_err ="";
                      
                     // Processing form data when form is submitted
                     if($_SERVER["REQUEST_METHOD"] == "POST"){
@@ -319,6 +317,13 @@
                             $lastName = $input_lastName;
                         }
 
+                        $input_conNum = trim($_POST["conNum"]);
+                        if(empty($input_conNum)){
+                            $conNum_err = "Please enter a name.";
+                        }else{
+                            $conNum = $input_conNum;
+                        }
+
                         $input_roomNumber = trim($_POST["roomNumber"]);
                         if(empty($input_roomNumber)){
                             $roomNumber_err = "Please enter a name.";
@@ -330,16 +335,17 @@
                         // Check input errors before inserting in database
                         if(empty($firstName_err) && empty($lastName_err) && empty($roomNumber_err)){
                             // Prepare an insert statement
-                            $sql = "INSERT INTO tenant_accounts (firstName, lastName, roomNumber) VALUES (?, ?, ?)";
+                            $sql = "INSERT INTO tenant_accounts (firstName, lastName, conNum,  roomNumber) VALUES (?, ?, ?, ?)";
                              
                             if($stmt = mysqli_prepare($link, $sql)){
                                 // Bind variables to the prepared statement as parameters
-                                mysqli_stmt_bind_param($stmt, "sss", $param_firstName, $param_lastName, $param_roomNumber);
+                                mysqli_stmt_bind_param($stmt, "sssi", $param_firstName, $param_lastName, $param_conNum, $param_roomNumber);
                                 
                                 // Set parameters
                                
                                 $param_firstName = $firstName;
                                 $param_lastName = $lastName;
+                                $param_conNum = $conNum;
                                 $param_roomNumber = $roomNumber;
 
                                
@@ -391,6 +397,13 @@
                             <input style="color: black;" type="text" name="lastName" class="form-control" value="<?php echo $lastName; ?>">
                             <span class="help-block"><?php echo $lastName_err;?></span>
                         </div>
+
+                        <div class="form-group <?php echo (!empty($conNum_err)) ? 'has-error' : ''; ?>">
+                            <label style="color: black;">Contact Number</label>
+                            <input style="color: black;" type="text" name="conNum" class="form-control" value="<?php echo $conNum; ?>">
+                            <span class="help-block"><?php echo $conNum_err;?></span>
+                        </div>
+
                         <div class="form-group <?php echo (!empty($roomNumber_err)) ? 'has-error' : ''; ?>">
                             <label style="color: black;">Room Number </label>
                             <input style="color: black;" type="text" name="roomNumber" class="form-control" value="<?php echo $roomNumber; ?>">
