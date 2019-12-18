@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 18, 2019 at 08:00 AM
+-- Generation Time: Dec 18, 2019 at 09:07 AM
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 7.3.9
 
@@ -127,18 +127,16 @@ CREATE TABLE `tenant_accounts` (
   `tenantID` int(11) NOT NULL,
   `firstName` varchar(50) NOT NULL,
   `lastName` varchar(50) NOT NULL,
-  `roomNumber` varchar(11) NOT NULL,
-  `password` varchar(8) NOT NULL
+  `conNum` varchar(12) NOT NULL,
+  `roomNumber` int(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tenant_accounts`
 --
 
-INSERT INTO `tenant_accounts` (`tenantID`, `firstName`, `lastName`, `roomNumber`, `password`) VALUES
-(4, 'Patrick', 'Responde', '512', ''),
-(5, 'jayditch', 'balansi', '12', ''),
-(6, 'jayditch', 'balansi', '17', '827ccb0e');
+INSERT INTO `tenant_accounts` (`tenantID`, `firstName`, `lastName`, `conNum`, `roomNumber`) VALUES
+(7, 'jayditch', 'balansi', '2147483647', 15);
 
 --
 -- Indexes for dumped tables
@@ -194,7 +192,7 @@ ALTER TABLE `tenantinfo`
 -- AUTO_INCREMENT for table `tenant_accounts`
 --
 ALTER TABLE `tenant_accounts`
-  MODIFY `tenantID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `tenantID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
