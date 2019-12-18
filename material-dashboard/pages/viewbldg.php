@@ -12,14 +12,8 @@
 =========================================================
 
  The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. -->
- <?php  
-    session_start();
-    include("functions.php");
-    if($_SESSION['login'] !==true){
-      header('location:../../../index.php');
-    }
-?>
-
+ 
+ 
 <!DOCTYPE html>
 <html lang="en">
 
@@ -235,6 +229,7 @@
               </div>
               <div class="card-body">
                 <div class="table-responsive">
+                   <button type="button" class="btn" data-toggle="modal" data-target="#myModal">Add Building Information</button>
 
                   <?php
 
@@ -277,6 +272,117 @@
                     mysqli_close($link);
 
                   ?>
+                  <?php
+                    // Include config file
+                    include "config.php";
+                     
+                    // Define variables and initialize with empty values
+                   $roomNumber = $roomRemarks = "";
+                    //$name_err = $address_err = $salary_err = "";
+                   $roomNumber_err = $roomRemarks_err = "";
+                     
+                    // Processing form data when form is submitted
+                    if($_SERVER["REQUEST_METHOD"] == "POST"){
+
+                 
+                        // Validate name
+                        $input_roomNumber = trim($_POST["roomNumber"]);
+                        if(empty($input_roomNumber)){
+                         $roomNumber_err = "Please enter a room number.";
+                          } else{
+                         $roomNumber = $input_roomNumber;
+                           }
+
+                        $input_roomRemarks = trim($_POST["roomRemarks"]);
+                         if(empty($input_roomRemarks)){
+                         $roomRemarks_err = "Please enter a remarks.";
+                         } else{
+                         $roomRemarks = $input_roomRemarks;
+                          }
+
+                         
+                        
+                        // Check input errors before inserting in database
+                        if(empty($roomNumber_err) && empty($roomRemarks_err)){
+                            // Prepare an insert statement
+                            $sql = "INSERT INTO bldginfo (roomNumber, roomRemarks) VALUES (?, ?)";
+                             
+                            if($stmt = mysqli_prepare($link, $sql)){
+                                // Bind variables to the prepared statement as parameters
+                               mysqli_stmt_bind_param($stmt, "ss", $param_roomNumber, $param_roomRemarks);
+                                
+                                // Set parameters
+                               
+                               $param_roomNumber = $roomNumber;
+                               $param_roomRemarks = $roomRemarks;
+
+                               
+                                
+                                // Attempt to execute the prepared statement
+                                if(mysqli_stmt_execute($stmt)){
+                                    // Records created successfully. Redirect to landing page
+                                    echo '<script type="text/javascript">'; 
+                                    echo 'alert("Building Information Added!. Thank You!");'; 
+                                    echo 'window.location.href = "viewbldg.php";';
+                                    echo '</script>';
+                                } else{
+                                    echo "Something went wrong. Please try again later.";
+                                }
+                    // Close statement
+                            mysqli_stmt_close($stmt);
+                            }else {
+                        echo "Something's wrong with the query: " . mysqli_error($link);
+                    }
+                             
+                            
+                        }
+                        
+                        // Close connection
+                        mysqli_close($link);
+                    }
+                    ?>
+
+                  <div id="myModal" class="modal fade" role="dialog">
+                      <div class="modal-dialog">
+
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                           
+                          </div>
+                          <div class="modal-body">
+                            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+
+                       
+                        <div class="form-group <?php echo (!empty($roomNumber_err)) ? 'has-error' : ''; ?>">
+                            <label style="color: black;">Room Number</label>
+                            <input style="color: black;" type="text" name="roomNumber" class="form-control" value="<?php echo $roomNumber; ?>">
+                            <span class="help-block"><?php echo $roomNumber_err;?></span>
+                        </div>
+                        <div class="form-group <?php echo (!empty($roomRemarks_err)) ? 'has-error' : ''; ?>">
+                            <label style="color: black;">Remarks </label>
+                            <input style="color: black;" type="text" name="roomRemarks" class="form-control" value="<?php echo $roomRemarks; ?>">
+                            <span class="help-block"><?php echo $roomRemarks_err;?></span>
+                        </div>
+                            </select>
+                          
+
+                        </div>
+    
+                        <div class="modal-footer">
+                              <input type="submit" class="btn btn-primary" value="Submit">
+                        <a href="viewbldg.php" class="btn btn-default">Cancel</a>
+                        </div>
+                    </form>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
       
   <!--   Core JS Files   -->
   <script src="../assets/js/core/jquery.min.js"></script>

@@ -1,18 +1,18 @@
 <?php
 // Process delete operation after confirmation
-if(isset($_POST["personel_ID"]) && !empty($_POST["personel_ID"])){
+if(isset($_POST["personnel_ID"]) && !empty($_POST["personnel_ID"])){
     // Include config file
     require_once "dbconn.php";
     
     // Prepare a delete statement
-    $sql = "DELETE FROM personel_accounts WHERE personel_ID = ?";
+    $sql = "DELETE FROM personnel_accounts WHERE personnel_ID = ?";
     
     if($stmt = mysqli_prepare($link, $sql)){
         // Bind variables to the prepared statement as parameters
-        mysqli_stmt_bind_param($stmt, "i", $param_personel_ID);
+        mysqli_stmt_bind_param($stmt, "i", $param_personnel_ID);
         
         // Set parameters
-        $param_personel_ID = trim($_POST["personel_ID"]);
+        $param_personnel_ID = trim($_POST["personnel_ID"]);
         
         // Attempt to execute the prepared statement
         if(mysqli_stmt_execute($stmt)){
@@ -62,7 +62,7 @@ if(isset($_POST["personel_ID"]) && !empty($_POST["personel_ID"])){
                     </div>
                     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                         <div class="alert alert-danger fade in">
-                            <input type="hidden" name="personel_ID" value="<?php echo trim($_GET["personel_ID"]); ?>"/>
+                            <input type="hidden" name="personnel_ID" value="<?php echo trim($_GET["personnel_ID"]); ?>"/>
                             <p>Are you sure you want to delete this record?</p><br>
                             <p>
                                 <input type="submit" value="Yes" class="btn btn-danger">
